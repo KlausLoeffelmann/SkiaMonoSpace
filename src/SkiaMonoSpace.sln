@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28407.52
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiaMonoSpaceDemo", "SkiaMonoSpaceDemo\SkiaMonoSpaceDemo.csproj", "{80CAACA5-84A7-43EC-9C26-19C55D551459}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiaMonoSpaceRenderer", "SkiaMonoSpaceRenderer\SkiaMonoSpaceRenderer.csproj", "{2389B584-7CBF-4B9D-99F7-903F9C05B248}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{80CAACA5-84A7-43EC-9C26-19C55D551459}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80CAACA5-84A7-43EC-9C26-19C55D551459}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80CAACA5-84A7-43EC-9C26-19C55D551459}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80CAACA5-84A7-43EC-9C26-19C55D551459}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2389B584-7CBF-4B9D-99F7-903F9C05B248}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2389B584-7CBF-4B9D-99F7-903F9C05B248}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2389B584-7CBF-4B9D-99F7-903F9C05B248}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2389B584-7CBF-4B9D-99F7-903F9C05B248}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1F25FD11-BC49-43B6-AAE7-84A8EDE15DC6}
+	EndGlobalSection
+EndGlobal
