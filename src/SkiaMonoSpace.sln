@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28407.52
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiaMonoSpaceDemo", "SkiaMonoSpaceDemo\SkiaMonoSpaceDemo.csproj", "{80CAACA5-84A7-43EC-9C26-19C55D551459}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiaMonospaceDemo", "SkiaMonoSpaceDemo\SkiaMonospaceDemo.csproj", "{80CAACA5-84A7-43EC-9C26-19C55D551459}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiaMonoSpaceRenderer", "SkiaMonoSpaceRenderer\SkiaMonoSpaceRenderer.csproj", "{2389B584-7CBF-4B9D-99F7-903F9C05B248}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkiaMonospaceRenderer", "SkiaMonoSpaceRenderer\SkiaMonospaceRenderer.csproj", "{2389B584-7CBF-4B9D-99F7-903F9C05B248}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
