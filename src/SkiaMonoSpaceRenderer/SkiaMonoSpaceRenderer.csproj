@@ -8,9 +8,10 @@
 
   <ItemGroup>
     <PackageReference Include="HarfBuzzSharp" Version="1.4.6.2" />
+    <PackageReference Include="OpenTK" Version="3.0.1" />
     <PackageReference Include="SkiaSharp" Version="1.68.0" />
     <PackageReference Include="SkiaSharp.HarfBuzz" Version="1.68.0" />
-    <PackageReference Include="System.Memory" Version="4.5.1" />
+    <PackageReference Include="System.Memory" Version="4.5.2" />
   </ItemGroup>
 
 </Project>

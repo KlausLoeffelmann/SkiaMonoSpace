@@ -23,16 +23,22 @@ namespace SkiaMonoSpaceRenderer
         float _preferredWidth;
         float _preferredHeight;
         Screenchar[] _screenBuffer;
-        readonly char _clearScreenCharacter = ' ';
+        readonly char _clearScreenCharacter = 'A';
 
         public SkiaMonospaceRenderer(SKTypeface typeface, float textSize,
-                                     SKColor foregroundColor, SKColor backgroundColor,
-                                     int widthInCharacters, int hightInCharacters)
+                                     SKColor currentForecolor, SKColor currentBackcolor,
+                                     int widthInCharacters, int heightInCharacters)
         {
+            _widthInCharacters = widthInCharacters;
+            _heightInCharacters = heightInCharacters;
+            CurrentForecolor = currentForecolor;
+            CurrentBackcolor = CurrentBackcolor;
+            _screenBuffer = new Screenchar[_widthInCharacters * _heightInCharacters];
+
             _currentPaint = new SKPaint()
             {
                 Style = SKPaintStyle.Fill,
-                Color = foregroundColor,
+                Color = CurrentForecolor,
                 IsAntialias = true,
                 Typeface = typeface,
                 TextSize = textSize
@@ -41,26 +47,30 @@ namespace SkiaMonoSpaceRenderer
             var fMetrics = _currentPaint.FontMetrics;
             var charWidth = fMetrics.MaxCharacterWidth;
             var charHeight = fMetrics.XHeight;
-            _screenBuffer = new Screenchar[widthInCharacters * _heightInCharacters];
+            ClearScreen();
         }
 
-        public void ClearScreen(SKColor forecolor, SKColor backcolor)
+        public void ClearScreen()
         {
             for (var i = 0; i < _screenBuffer.Length - 1; i++)
             {
-                _screenBuffer[i].Backcolor = backcolor;
-                _screenBuffer[i].Forecolor = forecolor;
+                _screenBuffer[i].Backcolor = CurrentBackcolor;
+                _screenBuffer[i].Forecolor = CurrentForecolor;
                 _screenBuffer[i].Character = _clearScreenCharacter;
             }
         }
 
         public void Render(SKSurface surface)
         {
+            // TODO:001 Refactor SKShaperClone to render screenbuffer content to Screen. For this to end, we have SKShaperClone as a template for the Points calculation.
             var shaper = new SKShaper(_currentPaint.Typeface);
             //var result = shaper.Shape(text, x, y, _currentPaint);
             //surface.Canvas.DrawShapeResultText(result, X, Y, _currentPaint);
         }
 
         public Screenchar[] ScreenBuffer { get => _screenBuffer; }
+
+        public SKColor CurrentForecolor { get; set; }
+        public SKColor CurrentBackcolor { get; set; }
     }
 }

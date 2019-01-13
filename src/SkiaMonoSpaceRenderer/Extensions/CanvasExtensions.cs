@@ -3,7 +3,7 @@ using System;
 using SkiaSharp.HarfBuzz;
 using System.Linq;
 
-namespace SkiaEditComponent
+namespace SkiaMonoSpaceRenderer
 {
     public static class CanvasExtensions
     {
