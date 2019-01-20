@@ -1,9 +1,8 @@
-﻿using SkiaMonoSpaceRenderer;
-using SkiaSharp;
+﻿using SkiaSharp;
 using SkiaSharp.Views.Desktop;
-using System.Drawing;
 
-namespace SkiaMonoSpace.Control
+
+namespace SkiaMonospace.Control
 {
     internal class SkiaMonospaceRenderTarget : SKGLControl
     {

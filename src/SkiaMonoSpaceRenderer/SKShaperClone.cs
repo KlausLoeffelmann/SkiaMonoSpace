@@ -1,7 +1,5 @@
-﻿using System;
-using System.Linq;
-
-using HarfBuzzSharp;
+﻿using HarfBuzzSharp;
+using System;
 
 namespace SkiaSharp.HarfBuzz
 {

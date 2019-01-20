@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiaMonospaceDemo", "SkiaMo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkiaMonospaceRenderer", "SkiaMonoSpaceRenderer\SkiaMonospaceRenderer.csproj", "{2389B584-7CBF-4B9D-99F7-903F9C05B248}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkiaMonospaceCore", "SkiaMonospaceCore\SkiaMonospaceCore.csproj", "{3E5EBE65-4039-4159-B3CC-0D4AE1095994}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiaMonospaceControls", "SkiaMonospaceControls\SkiaMonospaceControls.csproj", "{8391B1D0-983B-4093-AB29-0214A101A312}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{2389B584-7CBF-4B9D-99F7-903F9C05B248}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2389B584-7CBF-4B9D-99F7-903F9C05B248}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2389B584-7CBF-4B9D-99F7-903F9C05B248}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E5EBE65-4039-4159-B3CC-0D4AE1095994}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E5EBE65-4039-4159-B3CC-0D4AE1095994}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E5EBE65-4039-4159-B3CC-0D4AE1095994}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E5EBE65-4039-4159-B3CC-0D4AE1095994}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8391B1D0-983B-4093-AB29-0214A101A312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8391B1D0-983B-4093-AB29-0214A101A312}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8391B1D0-983B-4093-AB29-0214A101A312}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8391B1D0-983B-4093-AB29-0214A101A312}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

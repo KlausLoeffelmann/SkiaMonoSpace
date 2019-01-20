@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using SkiaMonoSpace;
 
 namespace SkiaMonoSpaceDemo
 {
@@ -20,7 +12,7 @@ namespace SkiaMonoSpaceDemo
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            var test = new SkiaMonoSpace.Control.SkiaMonospace();
+            var test = new SkiaMonospace.Control.SkiaMonospace();
             this.Controls.Add(test);
 
         }

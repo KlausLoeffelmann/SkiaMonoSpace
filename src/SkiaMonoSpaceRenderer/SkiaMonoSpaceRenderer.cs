@@ -1,11 +1,7 @@
-﻿using HarfBuzzSharp;
-using SkiaSharp;
+﻿using SkiaSharp;
 using SkiaSharp.HarfBuzz;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
 
-namespace SkiaMonoSpaceRenderer
+namespace SkiaMonospace
 {
     public struct Screenchar
     {

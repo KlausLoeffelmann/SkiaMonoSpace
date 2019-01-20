@@ -1,9 +1,9 @@
 ﻿using SkiaSharp;
-using System;
 using SkiaSharp.HarfBuzz;
+using System;
 using System.Linq;
 
-namespace SkiaMonoSpaceRenderer
+namespace SkiaMonospaceRenderer
 {
     public static class CanvasExtensions
     {

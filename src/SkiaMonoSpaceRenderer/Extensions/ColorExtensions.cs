@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-namespace SkiaEditComponent.Extensions
+namespace SkiaMonospaceRenderer
 {
     public static class ColorExtensions
     {

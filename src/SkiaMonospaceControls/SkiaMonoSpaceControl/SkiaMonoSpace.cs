@@ -1,11 +1,10 @@
-﻿using SkiaMonoSpaceRenderer;
-using SkiaSharp;
+﻿using SkiaSharp;
 using SkiaSharp.Views.Desktop;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace SkiaMonoSpace.Control
+namespace SkiaMonospace.Control
 {
     public class SkiaMonospace : ScrollableControl
     {
