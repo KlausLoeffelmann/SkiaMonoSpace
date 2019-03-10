@@ -26,10 +26,10 @@ namespace SkiaMonospace.Control
             {
                 return;
             }
-            RecreateControl();
+            CreateRenderTarget();
         }
 
-        private void RecreateControl()
+        private void CreateRenderTarget()
         {
 
             // This doesn't work in the Designer, because the Designer doesn't
@@ -42,6 +42,7 @@ namespace SkiaMonospace.Control
             _renderTargetControl = new SkiaMonospaceRenderTarget(typeFace, Font.Size,
                                         ForeColor.ToSKColor(), BackColor.ToSKColor(),
                                         WidthInCharacters, HeightInCharacters);
+            this.Controls.Add(_renderTargetControl);
         }
 
         public new Color DefaultForeColor { get; } = Color.FloralWhite;

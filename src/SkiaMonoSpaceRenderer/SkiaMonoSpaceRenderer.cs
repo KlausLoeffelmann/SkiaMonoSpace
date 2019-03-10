@@ -1,5 +1,7 @@
-﻿using SkiaSharp;
+﻿using HarfBuzzSharp;
+using SkiaSharp;
 using SkiaSharp.HarfBuzz;
+using System;
 
 namespace SkiaMonospace
 {
@@ -11,13 +13,16 @@ namespace SkiaMonospace
         public uint Attributes { get; set; }
     }
 
-    public class SkiaMonospaceRenderer
+    public class SkiaMonospaceRenderer : IDisposable
     {
+        internal const int FONT_SIZE_SCALE = 512;
+        private HarfBuzzSharp.Buffer _buffer;
+        private Font _font;
+
         SKPaint _currentPaint;
         int _widthInCharacters;
         int _heightInCharacters;
-        float _preferredWidth;
-        float _preferredHeight;
+        SKSize _preferredSize;
         Screenchar[] _screenBuffer;
         readonly char _clearScreenCharacter = 'A';
 
@@ -39,10 +44,27 @@ namespace SkiaMonospace
                 Typeface = typeface,
                 TextSize = textSize
             };
-
+            
             var fMetrics = _currentPaint.FontMetrics;
-            var charWidth = fMetrics.MaxCharacterWidth;
-            var charHeight = fMetrics.XHeight;
+            _preferredSize = new SKSize(fMetrics.MaxCharacterWidth * _widthInCharacters,
+                                        (fMetrics.CapHeight +
+                                         fMetrics.XHeight + fMetrics.Bottom + fMetrics.Descent)
+                                        * _heightInCharacters);
+
+            int index;
+            using (var blob = typeface.OpenStream(out index).ToHarfBuzzBlob())
+            using (var face = new Face(blob, (uint)index))
+            {
+                face.Index = (uint)index;
+                face.UnitsPerEm = (uint)typeface.UnitsPerEm;
+
+                _font = new Font(face);
+                _font.SetScale(FONT_SIZE_SCALE, FONT_SIZE_SCALE);
+                _font.SetFunctionsOpenType();
+            }
+
+            _buffer = new HarfBuzzSharp.Buffer();
+
             ClearScreen();
         }
 
@@ -58,7 +80,8 @@ namespace SkiaMonospace
 
         public void Render(SKSurface surface)
         {
-            // TODO:001 Refactor SKShaperClone to render screenbuffer content to Screen. For this to end, we have SKShaperClone as a template for the Points calculation.
+            // TODO:001 Refactor SKShaperClone to render screenbuffer content to Screen. 
+            // For this to end, we have SKShaperClone as a template for the Points calculation.
             var shaper = new SKShaper(_currentPaint.Typeface);
             //var result = shaper.Shape(text, x, y, _currentPaint);
             //surface.Canvas.DrawShapeResultText(result, X, Y, _currentPaint);
@@ -68,5 +91,27 @@ namespace SkiaMonospace
 
         public SKColor CurrentForecolor { get; set; }
         public SKColor CurrentBackcolor { get; set; }
+        public SKSize PreferredSize => _preferredSize;
+
+        private bool isDisposed = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!isDisposed)
+            {
+                if (disposing)
+                {
+                    _font?.Dispose();
+                    _buffer?.Dispose();
+                }
+
+                isDisposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
     }
 }

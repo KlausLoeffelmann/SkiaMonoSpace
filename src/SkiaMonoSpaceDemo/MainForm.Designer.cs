@@ -33,23 +33,28 @@
             // 
             // skiaMonospace1
             // 
+            this.skiaMonospace1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.skiaMonospace1.BackColor = System.Drawing.Color.DarkBlue;
             this.skiaMonospace1.Font = new System.Drawing.Font("Consolas", 14F);
             this.skiaMonospace1.ForeColor = System.Drawing.Color.FloralWhite;
             this.skiaMonospace1.HeightInCharacters = 40;
-            this.skiaMonospace1.Location = new System.Drawing.Point(153, 101);
+            this.skiaMonospace1.Location = new System.Drawing.Point(13, 14);
+            this.skiaMonospace1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.skiaMonospace1.Name = "skiaMonospace1";
-            this.skiaMonospace1.Size = new System.Drawing.Size(291, 180);
+            this.skiaMonospace1.Size = new System.Drawing.Size(1174, 664);
             this.skiaMonospace1.TabIndex = 0;
             this.skiaMonospace1.Text = "skiaMonospace1";
             this.skiaMonospace1.WidthInCharacters = 120;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1200, 692);
             this.Controls.Add(this.skiaMonospace1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MainForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.MainForm_Load);
