@@ -48,7 +48,7 @@ namespace SkiaMonospace.Control
         public new Color DefaultForeColor { get; } = Color.FloralWhite;
         public new Color DefaultBackColor { get; } = Color.DarkBlue;
         public string DefaultFontname { get; } = "Consolas";
-        public float DefaultTextsize { get; } = 14;
+        public float DefaultTextsize { get; } = 24;
         public int DefaultWidthInCharacters { get; } = 120;
         public int DefaultHeightInCharacters { get; } = 40;
         public int WidthInCharacters { get; set; }
