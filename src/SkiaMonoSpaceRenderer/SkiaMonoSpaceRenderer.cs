@@ -46,12 +46,11 @@ namespace SkiaMonospace
 
             _currentPaint = new SKPaint()
             {
-                Style = SKPaintStyle.StrokeAndFill,
+                Style = SKPaintStyle.Fill,
                 Color = CurrentForecolor,
                 IsAntialias = true,
                 Typeface = typeface,
-                TextSize = textSize,
-                IsStroke=true
+                TextSize = textSize
             };
 
             var fMetrics = _currentPaint.FontMetrics;
@@ -148,11 +147,8 @@ namespace SkiaMonospace
                         // move the cursor
                         xOffset += pos[i].XAdvance * textSizeX;
                         yOffset += pos[i].YAdvance * textSizeY;
-                        surface.Canvas.DrawRect(xOffset, yOffset, pos[i].XAdvance * textSizeX, 10, _currentPaint);
-                        
                     }
-                    //surface.Canvas.DrawPositionedText(text, points, _currentPaint);
-                    
+                    surface.Canvas.DrawPositionedText(text, points, _currentPaint);
                 }
 
                 xOffset = 0;
