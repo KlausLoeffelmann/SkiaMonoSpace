@@ -24,7 +24,7 @@ namespace SkiaMonoSpaceDemo
 
         private void _timer_Tick(object sender, EventArgs e)
         {
-            skiaMonospace1.ClearScreen((char)charCount++);
+            skiaMonospaceControl1.ClearScreen((char)charCount++);
 
             if (charCount > 65 + 24) charCount = 65;
         }

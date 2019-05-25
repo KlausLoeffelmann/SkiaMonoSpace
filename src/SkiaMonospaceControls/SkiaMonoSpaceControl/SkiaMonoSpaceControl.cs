@@ -7,9 +7,10 @@ using System.Windows.Forms;
 
 namespace SkiaMonospace.Control
 {
-    public class SkiaMonospaceControl : ScrollableControl
+    public class SkiaMonospaceControl : ScrollableControl, ISupportInitialize
     {
         SkiaMonospaceRenderTarget _renderTargetControl;
+        private bool _isInitializing;
 
         public SkiaMonospaceControl()
         {
@@ -21,15 +22,6 @@ namespace SkiaMonospace.Control
 
             this.AutoScroll = true;
 
-            // We can't use control.DesignerMode at this point, because that does not
-            // work in a custom control (from that control's perspective, we're running).
-            // So, we abuse the LicenseManager's UsageMode. More reliable in this context.
-            bool designMode = (LicenseManager.UsageMode == LicenseUsageMode.Designtime);
-            if (designMode)
-            {
-                return;
-            }
-            CreateRenderTarget();
         }
 
         private void CreateRenderTarget()
@@ -50,6 +42,11 @@ namespace SkiaMonospace.Control
 
         protected override void OnResize(EventArgs e)
         {
+            if (_renderTargetControl is null)
+            {
+                return;
+            }
+
             if (ClientRectangle.Width > _renderTargetControl.Width)
             {
                 _renderTargetControl.Left = (ClientRectangle.Width - _renderTargetControl.Width) / 2;
@@ -75,6 +72,20 @@ namespace SkiaMonospace.Control
             _renderTargetControl.Invalidate();
         }
 
+        public void BeginInit()
+        {
+            _isInitializing = true;
+        }
+
+        public void EndInit()
+        {
+            _isInitializing = false;
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+            {
+                return;
+            }
+            CreateRenderTarget();
+        }
 
         [Browsable(false)]
         public new Color DefaultForeColor { get; } = Color.FloralWhite;
