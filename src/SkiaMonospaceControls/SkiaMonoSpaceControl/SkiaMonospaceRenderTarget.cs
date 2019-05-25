@@ -22,7 +22,7 @@ namespace SkiaMonospace.Control
 
         protected override void OnPaintSurface(SKPaintGLSurfaceEventArgs e)
         {
-            base.OnPaintSurface(e);
+            //base.OnPaintSurface(e);
             _monoSpaceRenderer.Render(e.Surface);
         }
     }
