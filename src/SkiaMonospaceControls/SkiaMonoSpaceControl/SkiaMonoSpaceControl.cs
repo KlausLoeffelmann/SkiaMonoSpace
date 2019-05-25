@@ -10,7 +10,6 @@ namespace SkiaMonospace.Control
     public class SkiaMonospaceControl : ScrollableControl, ISupportInitialize
     {
         SkiaMonospaceRenderTarget _renderTargetControl;
-        private bool _isInitializing;
 
         public SkiaMonospaceControl()
         {
@@ -21,7 +20,19 @@ namespace SkiaMonospace.Control
             this.BackColor = DefaultBackColor;
 
             this.AutoScroll = true;
+        }
 
+        public void BeginInit()
+        {
+        }
+
+        public void EndInit()
+        {
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+            {
+                return;
+            }
+            CreateRenderTarget();
         }
 
         private void CreateRenderTarget()
@@ -70,21 +81,6 @@ namespace SkiaMonospace.Control
         {
             _renderTargetControl._monoSpaceRenderer.ClearScreen(clearCharacter);
             _renderTargetControl.Invalidate();
-        }
-
-        public void BeginInit()
-        {
-            _isInitializing = true;
-        }
-
-        public void EndInit()
-        {
-            _isInitializing = false;
-            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
-            {
-                return;
-            }
-            CreateRenderTarget();
         }
 
         [Browsable(false)]
