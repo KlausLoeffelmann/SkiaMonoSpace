@@ -43,7 +43,7 @@
             this.skiaMonospace1.Location = new System.Drawing.Point(13, 14);
             this.skiaMonospace1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.skiaMonospace1.Name = "skiaMonospace1";
-            this.skiaMonospace1.Size = new System.Drawing.Size(1174, 664);
+            this.skiaMonospace1.Size = new System.Drawing.Size(1877, 1093);
             this.skiaMonospace1.TabIndex = 0;
             this.skiaMonospace1.Text = "skiaMonospace1";
             this.skiaMonospace1.WidthInCharacters = 120;
@@ -52,7 +52,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 692);
+            this.ClientSize = new System.Drawing.Size(1903, 1121);
             this.Controls.Add(this.skiaMonospace1);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MainForm";

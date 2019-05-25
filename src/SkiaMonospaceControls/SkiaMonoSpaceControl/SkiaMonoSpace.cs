@@ -45,6 +45,12 @@ namespace SkiaMonospace.Control
             this.Controls.Add(_renderTargetControl);
         }
 
+        public void ClearScreen(char clearCharacter)
+        {
+            _renderTargetControl._monoSpaceRenderer.ClearScreen(clearCharacter);
+            _renderTargetControl.Invalidate();
+        }
+
         public new Color DefaultForeColor { get; } = Color.FloralWhite;
         public new Color DefaultBackColor { get; } = Color.DarkBlue;
         public string DefaultFontname { get; } = "Consolas";
