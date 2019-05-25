@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.skiaMonospace1 = new SkiaMonospace.Control.SkiaMonospace();
+            this.skiaMonospace1 = new SkiaMonospace.Control.SkiaMonospaceControl();
             this.SuspendLayout();
             // 
             // skiaMonospace1
@@ -64,7 +64,7 @@
 
         #endregion
 
-        private SkiaMonospace.Control.SkiaMonospace skiaMonospace1;
+        private SkiaMonospace.Control.SkiaMonospaceControl skiaMonospace1;
     }
 }
 

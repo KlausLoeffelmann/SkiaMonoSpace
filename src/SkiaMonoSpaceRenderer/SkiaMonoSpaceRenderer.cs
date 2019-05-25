@@ -18,13 +18,14 @@ namespace SkiaMonospace
 
     public class SkiaMonospaceRenderer : IDisposable
     {
-        internal const int FONT_SIZE_SCALE = 512;
+        internal const int FONT_SIZE_SCALE = 256;
         private Font _font;
         private float _lineHeight;
 
         SKPaint _currentPaint;
         int _widthInCharacters;
         int _heightInCharacters;
+        float _deviceDpi;
         SKSize _preferredSize;
         Screenchar[] _screenBuffer;
         readonly char _clearScreenCharacter = ' ';
@@ -34,27 +35,27 @@ namespace SkiaMonospace
 
         public SkiaMonospaceRenderer(SKTypeface typeface, float textSize,
                                      SKColor currentForecolor, SKColor currentBackcolor,
-                                     int widthInCharacters, int heightInCharacters)
+                                     int widthInCharacters, int heightInCharacters, float deviceDpi)
         {
             _widthInCharacters = widthInCharacters;
             _heightInCharacters = heightInCharacters;
             CurrentForecolor = currentForecolor;
             CurrentBackcolor = CurrentBackcolor;
             _screenBuffer = new Screenchar[_widthInCharacters * _heightInCharacters];
+            _deviceDpi = deviceDpi;
 
             _currentPaint = new SKPaint()
             {
-                Style = SKPaintStyle.Fill,
+                Style = SKPaintStyle.StrokeAndFill,
                 Color = CurrentForecolor,
                 IsAntialias = true,
                 Typeface = typeface,
-                TextSize = textSize
+                TextSize = textSize,
+                IsStroke=true
             };
 
             var fMetrics = _currentPaint.FontMetrics;
             _lineHeight = fMetrics.Bottom - fMetrics.Top;
-            _preferredSize = new SKSize(fMetrics.MaxCharacterWidth * _widthInCharacters,
-                                        _lineHeight * _heightInCharacters);
 
             int index;
             _blob = typeface.OpenStream(out index).ToHarfBuzzBlob();
@@ -67,6 +68,9 @@ namespace SkiaMonospace
             _font = new Font(_face);
             _font.SetScale(FONT_SIZE_SCALE, FONT_SIZE_SCALE);
             _font.SetFunctionsOpenType();
+
+            _preferredSize = new SKSize(MeasureTextWidth("WWW") / 3 * _widthInCharacters,
+                            _lineHeight * _heightInCharacters);
 
             ClearScreen(_clearScreenCharacter);
         }
@@ -83,8 +87,6 @@ namespace SkiaMonospace
 
         public void Render(SKSurface surface)
         {
-            // TODO:001 Refactor SKShaperClone to render screenbuffer content to Screen. 
-            // For this to end, we have SKShaperClone as a template for the Points calculation.
             var shaper = new SKShaper(_currentPaint.Typeface);
             float xOffset = 0, yOffset = 0;
             var totalCount = 0;
@@ -92,6 +94,8 @@ namespace SkiaMonospace
             SKPoint[] points = null;
             uint[] clusters = null;
             uint[] codepoints = null;
+
+            surface.Canvas.Clear();
 
             for (int lineCount = 0; lineCount < _heightInCharacters; lineCount++)
             {
@@ -144,12 +148,49 @@ namespace SkiaMonospace
                         // move the cursor
                         xOffset += pos[i].XAdvance * textSizeX;
                         yOffset += pos[i].YAdvance * textSizeY;
+                        surface.Canvas.DrawRect(xOffset, yOffset, pos[i].XAdvance * textSizeX, 10, _currentPaint);
+                        
                     }
-                    surface.Canvas.DrawPositionedText(text, points, _currentPaint);
+                    //surface.Canvas.DrawPositionedText(text, points, _currentPaint);
+                    
                 }
 
                 xOffset = 0;
             }
+        }
+
+        private float MeasureTextWidth(string text)
+        {
+            var shaper = new SKShaper(_currentPaint.Typeface);
+            float xOffset = 0;
+
+            using (var buffer = new HarfBuzzSharp.Buffer())
+            {
+                // add the text to the buffer
+                buffer.ClearContents();
+                buffer.AddUtf8(text);
+
+                // try to understand the text
+                buffer.GuessSegmentProperties();
+
+                // do the shaping
+                _font.Shape(buffer);
+
+                // get the shaping results
+                var len = buffer.Length;
+                var pos = buffer.GlyphPositions;
+
+                // get the sizes
+                float textSizeY = _currentPaint.TextSize / FONT_SIZE_SCALE;
+                float textSizeX = textSizeY * _currentPaint.TextScaleX;
+
+                for (var i = 0; i < len; i++)
+                {
+                    // move the cursor
+                    xOffset += pos[i].XAdvance * textSizeX;
+                }
+            }
+            return xOffset;
         }
 
         public Screenchar[] ScreenBuffer { get => _screenBuffer; }

@@ -1,5 +1,6 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Desktop;
+using System;
 using System.Drawing;
 
 namespace SkiaMonospace.Control
@@ -12,12 +13,14 @@ namespace SkiaMonospace.Control
                                      SKColor foregroundColor, SKColor backgroundColor,
                                      int widthInCharacters, int heightInCharacters)
         {
-
+            this.AutoSize = true;
             _monoSpaceRenderer = new SkiaMonospaceRenderer(typeface, textSize,
                                                            foregroundColor, backgroundColor,
-                                                           widthInCharacters, heightInCharacters);
-            this.ClientSize = new Size((int) _monoSpaceRenderer.PreferredSize.Width,
-                                       (int) _monoSpaceRenderer.PreferredSize.Height);
+                                                           widthInCharacters, heightInCharacters,
+                                                           this.DeviceDpi);
+            this.Size = new Size((int)_monoSpaceRenderer.PreferredSize.Width,
+                                       (int)_monoSpaceRenderer.PreferredSize.Height);
+
         }
 
         protected override void OnPaintSurface(SKPaintGLSurfaceEventArgs e)
