@@ -34,14 +34,17 @@
             // 
             // skiaMonospaceControl1
             // 
+            this.skiaMonospaceControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.skiaMonospaceControl1.AutoScroll = true;
             this.skiaMonospaceControl1.BackColor = System.Drawing.Color.DarkBlue;
             this.skiaMonospaceControl1.Font = new System.Drawing.Font("Consolas", 24F);
             this.skiaMonospaceControl1.ForeColor = System.Drawing.Color.FloralWhite;
             this.skiaMonospaceControl1.HeightInCharacters = 40;
-            this.skiaMonospaceControl1.Location = new System.Drawing.Point(27, 26);
+            this.skiaMonospaceControl1.Location = new System.Drawing.Point(12, 12);
             this.skiaMonospaceControl1.Name = "skiaMonospaceControl1";
-            this.skiaMonospaceControl1.Size = new System.Drawing.Size(1201, 665);
+            this.skiaMonospaceControl1.Size = new System.Drawing.Size(1245, 705);
             this.skiaMonospaceControl1.TabIndex = 0;
             this.skiaMonospaceControl1.Text = "skiaMonospaceControl1";
             this.skiaMonospaceControl1.WidthInCharacters = 120;
