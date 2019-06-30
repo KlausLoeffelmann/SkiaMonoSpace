@@ -26,7 +26,7 @@ namespace SkiaMonoSpaceDemo
         {
             skiaMonospaceControl1.ClearScreen((char)charCount++);
 
-            if (charCount > 65 + 24) charCount = 65;
+            if (charCount > 365 + 24) charCount = 65;
         }
     }
 }

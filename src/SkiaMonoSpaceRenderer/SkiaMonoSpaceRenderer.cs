@@ -1,4 +1,5 @@
 ﻿using HarfBuzzSharp;
+using OpenTK.Graphics.OpenGL;
 using SkiaSharp;
 using SkiaSharp.HarfBuzz;
 using System;
@@ -22,13 +23,14 @@ namespace SkiaMonospace
         private Font _font;
         private float _lineHeight;
 
-        SKPaint _currentPaint;
-        int _widthInCharacters;
-        int _heightInCharacters;
-        float _deviceDpi;
-        SKSize _preferredSize;
-        Screenchar[] _screenBuffer;
-        readonly char _clearScreenCharacter = ' ';
+        private SKPaint _currentPaint;
+        private int _widthInCharacters;
+        private int _heightInCharacters;
+        private float _deviceDpi;
+        private SKSize _preferredSize;
+        private Screenchar[] _screenBuffer;
+        private readonly char _clearScreenCharacter = ' ';
+        private (float width, float xAdvance) _measureTextWidthResult;
 
         Blob _blob;
         Face _face;
@@ -50,10 +52,12 @@ namespace SkiaMonospace
                 Color = CurrentForecolor,
                 IsAntialias = true,
                 Typeface = typeface,
-                TextSize = textSize
+                TextSize = textSize,
+                TextEncoding = SKTextEncoding.Utf32
             };
 
             var fMetrics = _currentPaint.FontMetrics;
+            _lineHeight = textSize;
 
             int index;
             _blob = typeface.OpenStream(out index).ToHarfBuzzBlob();
@@ -66,20 +70,50 @@ namespace SkiaMonospace
             _font = new Font(_face);
             _font.SetScale(FONT_SIZE_SCALE, FONT_SIZE_SCALE);
             _font.SetFunctionsOpenType();
-
-            _preferredSize = new SKSize(MeasureTextWidth("WWW") / 3 * _widthInCharacters,
-                            textSize * _heightInCharacters);
+            _measureTextWidthResult = MeasureTextWidth("W");
+            _preferredSize = new SKSize(_measureTextWidthResult.width  * _widthInCharacters,
+                            _lineHeight * _heightInCharacters);
 
             ClearScreen(_clearScreenCharacter);
         }
 
         public void ClearScreen(char clearCharacter)
         {
-            for (var i = 0; i < _screenBuffer.Length - 1; i++)
+            for (var i = 0; i < _screenBuffer.Length ; i++)
             {
                 _screenBuffer[i].Backcolor = CurrentBackcolor;
                 _screenBuffer[i].Forecolor = CurrentForecolor;
                 _screenBuffer[i].Character = clearCharacter;
+            }
+        }
+
+        private void BuildRenderBuffers()
+        {
+        }
+
+        private void BuildMainGlyphPositionsBuffer(SKPaint paint)
+        {
+            float textSizeY = paint.TextSize / FONT_SIZE_SCALE;
+            float textSizeX = textSizeY * paint.TextScaleX;
+
+            float xOffset = 0, yOffset = 0;
+
+            _mainGlyphPositionsBuffer = new GlyphsRenderInfo(_screenBuffer.Length);
+
+            int count = 0;
+
+            for (int lineCount = 0; lineCount < _heightInCharacters; lineCount++)
+            {
+                for (int columnCount = 0; columnCount < _widthInCharacters; columnCount++)
+                {
+                    _mainGlyphPositionsBuffer.GlyphPositions[count] = new SKPoint(
+                        xOffset * textSizeX,
+                        yOffset * textSizeY);
+
+                    // move the cursor
+                    xOffset += _measureTextWidthResult.xAdvance * textSizeX;
+                }
+                yOffset += _lineHeight;
             }
         }
 
@@ -90,8 +124,7 @@ namespace SkiaMonospace
             var totalCount = 0;
 
             SKPoint[] points = null;
-            uint[] clusters = null;
-            uint[] codepoints = null;
+            Byte[] textBytes;
 
             surface.Canvas.Clear();
 
@@ -130,15 +163,9 @@ namespace SkiaMonospace
                     float textSizeX = textSizeY * _currentPaint.TextScaleX;
 
                     points = new SKPoint[len];
-                    clusters = new uint[len];
-                    codepoints = new uint[len];
 
                     for (var i = 0; i < len; i++)
                     {
-                        codepoints[i] = info[i].Codepoint;
-
-                        clusters[i] = info[i].Cluster;
-
                         points[i] = new SKPoint(
                             xOffset + pos[i].XOffset * textSizeX,
                             yOffset - pos[i].YOffset * textSizeY);
@@ -147,14 +174,21 @@ namespace SkiaMonospace
                         xOffset += pos[i].XAdvance * textSizeX;
                         yOffset += pos[i].YAdvance * textSizeY;
                     }
-                    surface.Canvas.DrawPositionedText(text, points, _currentPaint);
+
+                    textBytes = Encoding.UTF32.GetBytes(text);
+                    surface.Canvas.DrawPositionedText(textBytes, points, _currentPaint);
+
+                    if (_currentPaint.Color == SKColors.White)
+                        _currentPaint.Color = SKColors.LightBlue;
+                    else
+                        _currentPaint.Color = SKColors.White;
                 }
 
                 xOffset = 0;
             }
         }
 
-        private float MeasureTextWidth(string text)
+        private (float width, float xAdvance) MeasureTextWidth(string text)
         {
             float xOffset = 0;
 
@@ -183,8 +217,9 @@ namespace SkiaMonospace
                     // move the cursor
                     xOffset += pos[i].XAdvance * textSizeX;
                 }
+
+                return (xOffset, pos[0].XAdvance);
             }
-            return xOffset;
         }
 
         public Screenchar[] ScreenBuffer { get => _screenBuffer; }
@@ -194,6 +229,7 @@ namespace SkiaMonospace
         public SKSize PreferredSize => _preferredSize;
 
         private bool isDisposed = false; // To detect redundant calls
+        private GlyphsRenderInfo _mainGlyphPositionsBuffer;
 
         protected virtual void Dispose(bool disposing)
         {
@@ -213,6 +249,18 @@ namespace SkiaMonospace
         public void Dispose()
         {
             Dispose(true);
+        }
+    }
+
+    internal class GlyphsRenderInfo
+    {
+        public byte[] TextBytes { get; private set; }
+        public SKPoint[] GlyphPositions { get; private set; }
+
+        public GlyphsRenderInfo(int charCount)
+        {
+            TextBytes = new byte[charCount];
+            GlyphPositions = new SKPoint[charCount];
         }
     }
 }

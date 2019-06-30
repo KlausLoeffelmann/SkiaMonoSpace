@@ -48,7 +48,7 @@
             this.skiaMonospaceControl1.Size = new System.Drawing.Size(1868, 1085);
             this.skiaMonospaceControl1.TabIndex = 0;
             this.skiaMonospaceControl1.Text = "skiaMonospaceControl1";
-            this.skiaMonospaceControl1.WidthInCharacters = 120;
+            this.skiaMonospaceControl1.WidthInCharacters = 80;
             // 
             // MainForm
             // 
