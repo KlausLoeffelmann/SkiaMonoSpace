@@ -54,7 +54,6 @@ namespace SkiaMonospace
             };
 
             var fMetrics = _currentPaint.FontMetrics;
-            _lineHeight = fMetrics.Bottom - fMetrics.Top;
 
             int index;
             _blob = typeface.OpenStream(out index).ToHarfBuzzBlob();
@@ -69,7 +68,7 @@ namespace SkiaMonospace
             _font.SetFunctionsOpenType();
 
             _preferredSize = new SKSize(MeasureTextWidth("WWW") / 3 * _widthInCharacters,
-                            _lineHeight * _heightInCharacters);
+                            textSize * _heightInCharacters);
 
             ClearScreen(_clearScreenCharacter);
         }
@@ -157,7 +156,6 @@ namespace SkiaMonospace
 
         private float MeasureTextWidth(string text)
         {
-            var shaper = new SKShaper(_currentPaint.Typeface);
             float xOffset = 0;
 
             using (var buffer = new HarfBuzzSharp.Buffer())
