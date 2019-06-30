@@ -12,7 +12,7 @@ namespace SkiaMonospace
     public struct Screenchar
     {
         public char Character { get; set; }
-        public SKColor Forecolor { get; set; } 
+        public SKColor Forecolor { get; set; }
         public SKColor Backcolor { get; set; }
         public uint Attributes { get; set; }
     }
@@ -71,32 +71,38 @@ namespace SkiaMonospace
             _font.SetScale(FONT_SIZE_SCALE, FONT_SIZE_SCALE);
             _font.SetFunctionsOpenType();
             _measureTextWidthResult = MeasureTextWidth("W");
-            _preferredSize = new SKSize(_measureTextWidthResult.width  * _widthInCharacters,
+            _preferredSize = new SKSize(_measureTextWidthResult.width * _widthInCharacters,
                             _lineHeight * _heightInCharacters);
 
+            BuildMainGlyphPositionsBuffer(_currentPaint, _clearScreenCharacter);
             ClearScreen(_clearScreenCharacter);
         }
 
         public void ClearScreen(char clearCharacter)
         {
-            for (var i = 0; i < _screenBuffer.Length ; i++)
+            var textBytes = Encoding.UTF32.GetBytes(new char[] { clearCharacter });
+
+            for (var i = 0; i < _screenBuffer.Length; i++)
             {
                 _screenBuffer[i].Backcolor = CurrentBackcolor;
                 _screenBuffer[i].Forecolor = CurrentForecolor;
                 _screenBuffer[i].Character = clearCharacter;
+
+                _mainGlyphPositionsBuffer.TextBytes[i * 4] = textBytes[0];
+                _mainGlyphPositionsBuffer.TextBytes[1 + i * 4] = textBytes[1];
+                _mainGlyphPositionsBuffer.TextBytes[2 + i * 4] = textBytes[2];
+                _mainGlyphPositionsBuffer.TextBytes[3 + i * 4] = textBytes[3];
             }
         }
 
-        private void BuildRenderBuffers()
-        {
-        }
-
-        private void BuildMainGlyphPositionsBuffer(SKPaint paint)
+        private void BuildMainGlyphPositionsBuffer(SKPaint paint, char clearCharacter)
         {
             float textSizeY = paint.TextSize / FONT_SIZE_SCALE;
             float textSizeX = textSizeY * paint.TextScaleX;
 
-            float xOffset = 0, yOffset = 0;
+            float xOffset, yOffset = 0;
+
+            var textBytes = Encoding.UTF32.GetBytes(new char[] { clearCharacter });
 
             _mainGlyphPositionsBuffer = new GlyphsRenderInfo(_screenBuffer.Length);
 
@@ -104,20 +110,39 @@ namespace SkiaMonospace
 
             for (int lineCount = 0; lineCount < _heightInCharacters; lineCount++)
             {
+                xOffset = 0;
+                yOffset += _lineHeight;
+
                 for (int columnCount = 0; columnCount < _widthInCharacters; columnCount++)
                 {
                     _mainGlyphPositionsBuffer.GlyphPositions[count] = new SKPoint(
-                        xOffset * textSizeX,
-                        yOffset * textSizeY);
+                        xOffset, yOffset);
+
+                    _mainGlyphPositionsBuffer.TextBytes[4 * count] = textBytes[0];
+                    _mainGlyphPositionsBuffer.TextBytes[1 + 4 * count] = textBytes[1];
+                    _mainGlyphPositionsBuffer.TextBytes[2 + 4 * count] = textBytes[2];
+                    _mainGlyphPositionsBuffer.TextBytes[3 + 4 * count++] = textBytes[3];
 
                     // move the cursor
                     xOffset += _measureTextWidthResult.xAdvance * textSizeX;
                 }
-                yOffset += _lineHeight;
             }
         }
 
+        private void BuildRenderBuffers()
+        {
+        }
+
         public void Render(SKSurface surface)
+        {
+
+            surface.Canvas.Clear();
+            surface.Canvas.DrawPositionedText(_mainGlyphPositionsBuffer.TextBytes,
+                                              _mainGlyphPositionsBuffer.GlyphPositions,
+                                              _currentPaint);
+        }
+
+        public void Render(SKSurface surface, bool overloadFlag)
         {
             var shaper = new SKShaper(_currentPaint.Typeface);
             float xOffset = 0, yOffset = 0;
@@ -257,9 +282,11 @@ namespace SkiaMonospace
         public byte[] TextBytes { get; private set; }
         public SKPoint[] GlyphPositions { get; private set; }
 
+
         public GlyphsRenderInfo(int charCount)
         {
-            TextBytes = new byte[charCount];
+            // Works, because we use UTF-32.
+            TextBytes = new byte[charCount * 4];
             GlyphPositions = new SKPoint[charCount];
         }
     }
