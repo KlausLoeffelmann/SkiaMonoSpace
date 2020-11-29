@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>7.2</LangVersion>
+    <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>SkiaMonospace.Renderer</RootNamespace>
   </PropertyGroup>
 
@@ -11,19 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Extensions\ColorExtensions.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="HarfBuzzSharp" Version="1.4.6.2" />
-    <PackageReference Include="OpenTK" Version="3.0.1" />
-    <PackageReference Include="SkiaSharp" Version="1.68.0" />
-    <PackageReference Include="SkiaSharp.HarfBuzz" Version="1.68.0" />
-    <PackageReference Include="System.Memory" Version="4.5.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\" />
+    <PackageReference Include="HarfBuzzSharp" Version="2.6.1.7" />
+    <PackageReference Include="SkiaSharp" Version="2.80.2" />
+    <PackageReference Include="SkiaSharp.HarfBuzz" Version="2.80.2" />
+    <PackageReference Include="System.Memory" Version="4.5.4" />
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,7 @@
 ﻿using HarfBuzzSharp;
-using OpenTK.Graphics.OpenGL;
 using SkiaSharp;
 using SkiaSharp.HarfBuzz;
 using System;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 
 namespace SkiaMonospace
@@ -63,8 +60,8 @@ namespace SkiaMonospace
             _blob = typeface.OpenStream(out index).ToHarfBuzzBlob();
             _face = new Face(_blob, (uint)index)
             {
-                Index = (uint)index,
-                UnitsPerEm = (uint)typeface.UnitsPerEm
+                Index = index,
+                UnitsPerEm = typeface.UnitsPerEm
             };
 
             _font = new Font(_face);
