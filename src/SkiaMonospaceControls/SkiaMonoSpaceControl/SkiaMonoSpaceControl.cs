@@ -7,10 +7,9 @@ using System.Windows.Forms;
 
 namespace SkiaMonospace.Control
 {
-    public class SkiaMonospaceControl : ScrollableControl, ISupportInitialize
+    public class SkiaMonospaceControl : ScrollableControl
     {
         SkiaMonospaceRenderTarget _renderTargetControl;
-        private bool _isDesignMode;
         private bool _renderTargetControlIsInstanciated;
 
         public SkiaMonospaceControl()
@@ -22,27 +21,16 @@ namespace SkiaMonospace.Control
             this.BackColor = DefaultBackColor;
 
             this.AutoScroll = true;
-
-            // This a) actually works instead of the DesignMode property and 
-            // b) but only in the constructor, so we need to capture the result.
-            _isDesignMode = LicenseManager.UsageMode == LicenseUsageMode.Designtime;
         }
 
-        public void BeginInit()
+        protected override void CreateHandle()
         {
-        }
-
-        public void EndInit()
-        {
-            if (_isDesignMode)
+            base.CreateHandle();
+            if (this.IsAncestorSiteInDesignMode)
             {
                 return;
             }
 
-            // We only want to create the rendertarget,
-            // when we know how big the size of the textbuffer window will be,
-            // so after WidthInCharcters and HeightsInCharacters have been set
-            // by InitializeComponent of that component which uses this control.
             CreateRenderTarget();
         }
 
@@ -66,8 +54,10 @@ namespace SkiaMonospace.Control
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            if (_isDesignMode)
+            if (!IsHandleCreated || IsAncestorSiteInDesignMode)
+            {
                 return;
+            }
 
             // OnResize is called at design time, so we need to avoid
             // loading the OpenTk assembly, since it is not compatible with
@@ -105,7 +95,7 @@ namespace SkiaMonospace.Control
 
         public void ClearScreen(char clearCharacter)
         {
-            if (_isDesignMode)
+            if (!IsHandleCreated || IsAncestorSiteInDesignMode)
             {
                 return;
             }
@@ -116,22 +106,33 @@ namespace SkiaMonospace.Control
 
         [Browsable(false)]
         public new Color DefaultForeColor { get; } = Color.FloralWhite;
+
         [Browsable(false)]
         public new Color DefaultBackColor { get; } = Color.DarkBlue;
+
         [Browsable(false)]
         public string DefaultFontname { get; } = "Consolas";
+
         [Browsable(false)]
         public float DefaultTextsize { get; } = 24;
+
         [Browsable(false)]
-        public int DefaultWidthInCharacters { get; } = 120;
+        public int DefaultWidthInCharacters { get; } = 80;
+
         [Browsable(false)]
         public int DefaultHeightInCharacters { get; } = 40;
+
         [Category("Layout")]
         public int WidthInCharacters { get; set; }
+
         [Category("Layout")]
         public int HeightInCharacters { get; set; }
 
         [Browsable(false)]
         public Screenchar[] ScreenBuffer { get => _renderTargetControl._monoSpaceRenderer.ScreenBuffer; }
+
+        [Browsable(false)]
+        public long LastFrameMs => _renderTargetControl.LastFrameMs;
+
     }
 }

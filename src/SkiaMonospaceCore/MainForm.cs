@@ -11,7 +11,7 @@ namespace SkiaMonoSpaceDemo
         public MainForm()
         {
             InitializeComponent();
-            
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -25,6 +25,7 @@ namespace SkiaMonoSpaceDemo
         private void _timer_Tick(object sender, EventArgs e)
         {
             skiaMonospaceControl1.ClearScreen((char)charCount++);
+            Text = $"Skia MonoSpace [{skiaMonospaceControl1.LastFrameMs} ms.]";
 
             if (charCount > 365 + 24) charCount = 65;
         }

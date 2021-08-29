@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.skiaMonospaceControl1 = new SkiaMonospace.Control.SkiaMonospaceControl();
-            ((System.ComponentModel.ISupportInitialize)(this.skiaMonospaceControl1)).BeginInit();
             this.SuspendLayout();
             // 
             // skiaMonospaceControl1
@@ -60,9 +59,7 @@
             this.Name = "MainForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.skiaMonospaceControl1)).EndInit();
             this.ResumeLayout(false);
-
         }
 
         #endregion
@@ -70,4 +67,3 @@
         private SkiaMonospace.Control.SkiaMonospaceControl skiaMonospaceControl1;
     }
 }
-

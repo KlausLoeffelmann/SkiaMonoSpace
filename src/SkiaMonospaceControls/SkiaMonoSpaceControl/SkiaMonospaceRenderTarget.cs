@@ -1,6 +1,5 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Desktop;
-using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -17,9 +16,10 @@ namespace SkiaMonospace.Control
             this.AutoSize = true;
             _monoSpaceRenderer = new SkiaMonospaceRenderer(typeface, textSize,
                                                            foregroundColor, backgroundColor,
-                                                           widthInCharacters, heightInCharacters,
-                                                           this.DeviceDpi);
+                                                           widthInCharacters, heightInCharacters);
         }
+
+        public long LastFrameMs => _monoSpaceRenderer.LastFrameInMs;
 
         protected override void OnPaintSurface(SKPaintGLSurfaceEventArgs e)
         {
