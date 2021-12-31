@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaMonospaceCore;
+using System;
 using System.Windows.Forms;
 
 namespace SkiaMonoSpaceDemo
@@ -28,6 +29,12 @@ namespace SkiaMonoSpaceDemo
             Text = $"Skia MonoSpace [{skiaMonospaceControl1.LastFrameMs} ms.]";
 
             if (charCount > 365 + 24) charCount = 65;
+        }
+
+        private void RunSkiaPlayground_Click(object sender, EventArgs e)
+        {
+            SkiaSharpPlaygroundForm form = new();
+            form.ShowDialog();
         }
     }
 }

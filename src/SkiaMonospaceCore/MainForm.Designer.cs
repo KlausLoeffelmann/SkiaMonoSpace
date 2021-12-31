@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.skiaMonospaceControl1 = new SkiaMonospace.Control.SkiaMonospaceControl();
+            this.showSkiaSharpPlaygroundFormButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // skiaMonospaceControl1
@@ -38,32 +39,45 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.skiaMonospaceControl1.AutoScroll = true;
             this.skiaMonospaceControl1.BackColor = System.Drawing.Color.DarkBlue;
-            this.skiaMonospaceControl1.Font = new System.Drawing.Font("Consolas", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.skiaMonospaceControl1.Font = new System.Drawing.Font("Consolas", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.skiaMonospaceControl1.ForeColor = System.Drawing.Color.FloralWhite;
             this.skiaMonospaceControl1.HeightInCharacters = 40;
-            this.skiaMonospaceControl1.Location = new System.Drawing.Point(18, 18);
-            this.skiaMonospaceControl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.skiaMonospaceControl1.Location = new System.Drawing.Point(20, 22);
+            this.skiaMonospaceControl1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.skiaMonospaceControl1.Name = "skiaMonospaceControl1";
-            this.skiaMonospaceControl1.Size = new System.Drawing.Size(1199, 782);
+            this.skiaMonospaceControl1.Size = new System.Drawing.Size(1332, 931);
             this.skiaMonospaceControl1.TabIndex = 0;
             this.skiaMonospaceControl1.Text = "skiaMonospaceControl1";
             this.skiaMonospaceControl1.WidthInCharacters = 80;
             // 
+            // showSkiaSharpPlaygroundFormButton
+            // 
+            this.showSkiaSharpPlaygroundFormButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.showSkiaSharpPlaygroundFormButton.Location = new System.Drawing.Point(1055, 962);
+            this.showSkiaSharpPlaygroundFormButton.Name = "showSkiaSharpPlaygroundFormButton";
+            this.showSkiaSharpPlaygroundFormButton.Size = new System.Drawing.Size(297, 47);
+            this.showSkiaSharpPlaygroundFormButton.TabIndex = 1;
+            this.showSkiaSharpPlaygroundFormButton.Text = "Show Skiasharp Playground";
+            this.showSkiaSharpPlaygroundFormButton.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1235, 819);
+            this.ClientSize = new System.Drawing.Size(1372, 1024);
+            this.Controls.Add(this.showSkiaSharpPlaygroundFormButton);
             this.Controls.Add(this.skiaMonospaceControl1);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "Skia Monospace Demo";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
+
         }
 
         #endregion
 
         private SkiaMonospace.Control.SkiaMonospaceControl skiaMonospaceControl1;
+        private System.Windows.Forms.Button showSkiaSharpPlaygroundFormButton;
     }
 }
